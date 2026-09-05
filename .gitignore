@@ -1,0 +1,23 @@
+/target
+/out
+/run-*/
+/ci-output/
+/ci-atlas.bmp
+/rustfmt.patch
+*.log
+*.lpw
+*.bmp
+.DS_Store
+.idea/
+.vscode/
+
+# Source scenarios are not binary journals.
+!examples/*.lpw
+/apps/**/target/
+/saves/
+/captures/
+/out/
+*.lpwr
+*.slot0
+*.slot1
+*.tmp-*
