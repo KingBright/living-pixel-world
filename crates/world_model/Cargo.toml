@@ -1,0 +1,12 @@
+[package]
+name = "world_model"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+sim_core = { path = "../sim_core" }
+
+[lints]
+workspace = true

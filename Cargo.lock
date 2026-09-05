@@ -1,0 +1,75 @@
+# Local-only workspace lock manifest. No registry dependencies.
+version = 4
+
+[[package]]
+name = "hydrology"
+version = "0.3.0"
+dependencies = [
+ "world_model",
+]
+
+[[package]]
+name = "sim_core"
+version = "0.3.0"
+
+[[package]]
+name = "simulation"
+version = "0.3.0"
+dependencies = [
+ "hydrology",
+ "sim_core",
+ "world_model",
+ "worldgen",
+]
+
+[[package]]
+name = "world_cli"
+version = "0.3.0"
+dependencies = [
+ "world_runtime",
+ "world_view",
+]
+
+[[package]]
+name = "world_headless"
+version = "0.3.0"
+dependencies = [
+ "sim_core",
+ "simulation",
+ "world_model",
+ "worldgen",
+]
+
+[[package]]
+name = "world_model"
+version = "0.3.0"
+dependencies = [
+ "sim_core",
+]
+
+[[package]]
+name = "world_runtime"
+version = "0.3.0"
+dependencies = [
+ "hydrology",
+ "sim_core",
+ "world_model",
+ "worldgen",
+]
+
+[[package]]
+name = "world_view"
+version = "0.3.0"
+dependencies = [
+ "sim_core",
+ "world_model",
+ "world_runtime",
+]
+
+[[package]]
+name = "worldgen"
+version = "0.3.0"
+dependencies = [
+ "sim_core",
+ "world_model",
+]
