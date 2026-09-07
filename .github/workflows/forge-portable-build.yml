@@ -1,0 +1,43 @@
+name: Forge portable validation environment
+on:
+  push:
+    branches: [work/forge-head-refinement]
+    paths: [.github/workflows/forge-portable-build.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - name: Fetch workbench dependencies
+        run: |
+          cargo fetch --manifest-path tools/pixel-character-forge/Cargo.toml
+          cargo test --manifest-path tools/pixel-character-forge/Cargo.toml --no-default-features
+      - name: Package minimal compiler and dependency sources for offline validation
+        shell: bash
+        run: |
+          set -eu
+          ROOT="$(rustc --print sysroot)"
+          mkdir -p portable/toolchain/bin portable/toolchain/lib portable/cargo
+          cp "$ROOT/bin/rustc" "$ROOT/bin/cargo" "$ROOT/bin/rustfmt" portable/toolchain/bin/
+          find "$ROOT/lib" -maxdepth 1 -type f -name '*.so*' -exec cp {} portable/toolchain/lib/ \;
+          mkdir -p portable/toolchain/lib/rustlib/x86_64-unknown-linux-gnu
+          cp -a "$ROOT/lib/rustlib/x86_64-unknown-linux-gnu/lib" portable/toolchain/lib/rustlib/x86_64-unknown-linux-gnu/
+          cp -a "$HOME/.cargo/registry" portable/cargo/
+          cp tools/pixel-character-forge/Cargo.lock portable/Cargo.lock
+          rustc --version > portable/VERSIONS.txt
+          cargo --version >> portable/VERSIONS.txt
+          tar -C portable -czf forge-offline-build.tar.gz .
+          sha256sum forge-offline-build.tar.gz > forge-offline-build.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: forge-offline-build-environment
+          path: |
+            forge-offline-build.tar.gz
+            forge-offline-build.sha256
+          retention-days: 3
