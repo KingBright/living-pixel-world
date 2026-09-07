@@ -1,0 +1,30 @@
+[package]
+name = "pixel-character-forge"
+version = "0.2.0"
+edition = "2021"
+description = "Recipe-driven Rust pixel character workbench with IK, secondary physics and sprite export"
+license = "MIT"
+default-run = "forge"
+
+# Remains standalone when placed inside an existing game repository.
+[workspace]
+
+[features]
+default = ["desktop"]
+desktop = ["dep:macroquad", "dep:egui-macroquad"]
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+png = "0.17"
+macroquad = { version = "0.4.14", default-features = false, optional = true }
+egui-macroquad = { version = "0.17.3", default-features = false, optional = true }
+
+[[bin]]
+name = "forge"
+path = "src/bin/forge.rs"
+required-features = ["desktop"]
+
+[[bin]]
+name = "forge-cli"
+path = "src/bin/forge-cli.rs"

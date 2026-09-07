@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "name": "combo",
+  "base_motion": "combo",
+  "duration": 2.4,
+  "looping": false,
+  "fps": 30,
+  "mirrored": false,
+  "tracks": [
+    {
+      "target": "body_rotation",
+      "keys": [
+        {
+          "time": 0.0,
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "interpolation": "smooth"
+        },
+        {
+          "time": 0.72,
+          "value": {
+            "x": 0,
+            "y": -12,
+            "z": 0
+          },
+          "interpolation": "smooth"
+        },
+        {
+          "time": 1.488,
+          "value": {
+            "x": 0,
+            "y": 16,
+            "z": 0
+          },
+          "interpolation": "smooth"
+        },
+        {
+          "time": 2.4,
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "interpolation": "smooth"
+        }
+      ]
+    }
+  ],
+  "events": []
+}

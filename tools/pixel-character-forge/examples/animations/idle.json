@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "name": "idle",
+  "base_motion": "idle",
+  "duration": 2.4,
+  "looping": true,
+  "fps": 30,
+  "mirrored": false,
+  "tracks": [
+    {
+      "target": "head",
+      "keys": [
+        {
+          "time": 0.0,
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "interpolation": "smooth"
+        },
+        {
+          "time": 1.2,
+          "value": {
+            "x": 0.2,
+            "y": 0.45,
+            "z": 0
+          },
+          "interpolation": "smooth"
+        },
+        {
+          "time": 2.4,
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "interpolation": "smooth"
+        }
+      ]
+    }
+  ],
+  "events": []
+}
