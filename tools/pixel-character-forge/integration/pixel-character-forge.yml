@@ -1,0 +1,43 @@
+name: Verify Pixel Character Forge v0.2
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - name: Locate standalone project
+        run: |
+          if [ -f tools/pixel-character-forge/Cargo.toml ]; then
+            echo "FORGE_DIR=tools/pixel-character-forge" >> "$GITHUB_ENV"
+          else
+            echo "FORGE_DIR=." >> "$GITHUB_ENV"
+          fi
+      - name: Test all core contracts
+        run: cargo test --manifest-path "$FORGE_DIR/Cargo.toml" --no-default-features
+      - name: Check complete desktop editor
+        run: cargo check --manifest-path "$FORGE_DIR/Cargo.toml" --all-targets --all-features
+      - name: Clippy diagnostics
+        run: cargo clippy --manifest-path "$FORGE_DIR/Cargo.toml" --all-targets --all-features
+      - name: Generate renderer output and editable presets
+        run: |
+          cd "$FORGE_DIR"
+          cargo run --release --no-default-features --bin forge-cli -- examples exports/presets
+          cargo run --release --no-default-features --bin forge-cli -- motion-presets exports/animations
+          cargo run --release --no-default-features --bin forge-cli -- export-clip exports/presets/preset-0.json exports/animations/combo.json exports/combo 12 256
+          cargo run --release --no-default-features --bin forge-cli -- render exports/presets/preset-0.json exports/animations/idle.json exports/soft-256.png 0.4 256 20 soft
+          cargo run --release --no-default-features --bin forge-cli -- render exports/presets/preset-0.json exports/animations/idle.json exports/ink-128.png 0.4 128 20 ink
+      - name: Build native Linux binaries
+        run: cargo build --manifest-path "$FORGE_DIR/Cargo.toml" --release --bins
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pixel-character-forge-v02-linux-and-previews
+          path: |
+            **/exports/**
+            **/target/release/forge
+            **/target/release/forge-cli
+            **/Cargo.lock
