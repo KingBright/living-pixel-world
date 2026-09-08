@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "name": "Clockwork mage",
+  "seed": 20260906,
+  "species": "automaton",
+  "body": {"stature": 1.12, "bulk": 0.8, "shoulders": 0.85, "legs": 1.15, "head": 0.9},
+  "face": {"jaw": 1.25, "eye_size": 1.2, "nose": 0.6},
+  "hair": {"style": "bald"},
+  "equipment": {"outfit": "robe", "weapon": "staff", "headwear": "crown", "cape": true, "skirt": 0.9, "ornament": "halo", "pattern": "runes"},
+  "palette": {"skin": [134, 157, 172], "cloth": [46, 62, 112], "accent": [227, 178, 86], "eyes": [103, 240, 218]},
+  "attachments": [
+    {"anchor": "chest", "shape": "diamond", "offset": [0, 0, 5], "size": 2.4, "color": [102, 224, 210]},
+    {"anchor": "head", "shape": "orb", "offset": [0, 15, 0], "size": 2, "color": [234, 190, 98]}
+  ]
+}
